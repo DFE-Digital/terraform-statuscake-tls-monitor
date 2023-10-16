@@ -59,5 +59,6 @@ module "statuscake-tls-monitor" {
 
 | Name | Description |
 |------|-------------|
-| <a name="output_environment"></a> [environment](#output\_environment) | n/a |
+| <a name="output_statuscake_contact_group"></a> [statuscake\_contact\_group](#output\_statuscake\_contact\_group) | n/a |
+| <a name="output_statuscake_ssl_check"></a> [statuscake\_ssl\_check](#output\_statuscake\_ssl\_check) | n/a |
 <!-- END_TF_DOCS -->
