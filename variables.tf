@@ -19,25 +19,25 @@ variable "statuscake_alert_at" {
   default     = []
 }
 
-variable "statuscake_on_reminder" {
+variable "statuscake_notify_on_reminder" {
   description = "Send StatusCake reminders when your certificate is about to expire."
   type        = bool
   default     = true
 }
 
-variable "statuscake_on_expiry" {
+variable "statuscake_notify_on_expiry" {
   description = "Send StatusCake expiration alerts when your certificate has expired."
   type        = bool
   default     = true
 }
 
-variable "statuscake_on_broken" {
+variable "statuscake_notify_on_broken" {
   description = "Send StatusCake problem alerts when your certificate has issues which cause it to throw errors."
   type        = bool
   default     = false
 }
 
-variable "statuscake_on_mixed" {
+variable "statuscake_notify_on_mixed" {
   description = "Send StatusCake warnings whenever insecure content gets loaded on your HTTPS enabled website."
   type        = bool
   default     = false
