@@ -1,0 +1,70 @@
+name: Continuous integration
+
+on:
+  push:
+    branches: main
+  pull_request:
+
+jobs:
+  terraform-validate:
+    name: Terraform Validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Get terraform version
+        id: get-terraform-version
+        run: |
+          DOTFILE_VERSION=$(cat .terraform-version)
+          echo "version=$DOTFILE_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Pull Terraform image
+        run: |
+          docker pull hashicorp/terraform:${{ steps.get-terraform-version.outputs.version }}
+
+      - name: Run a Terraform init
+        run: |
+          docker run \
+            --rm \
+            -v $(pwd):/terraform \
+            -w /terraform \
+            hashicorp/terraform:${{ steps.get-terraform-version.outputs.version }} \
+            init
+
+      - name: Run a Terraform validate
+        run: |
+          docker run \
+            --rm \
+            -v $(pwd):/terraform \
+            -w /terraform \
+            hashicorp/terraform:${{ steps.get-terraform-version.outputs.version }} \
+            validate
+
+      - name: Run a Terraform format check
+        run: |
+          docker run \
+            --rm \
+            -v $(pwd):/terraform \
+            -w /terraform \
+            hashicorp/terraform:${{ steps.get-terraform-version.outputs.version }} \
+            fmt -check=true -diff=true
+
+  terraform-docs-validation:
+    name: Terraform Docs validation
+    needs: terraform-validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Generate Terraform docs
+        uses: terraform-docs/gh-actions@v1.0.0
+        with:
+          working-dir: .
+          config-file: .terraform-docs.yml
+          output-file: README.md
+          output-method: inject
+          fail-on-diff: true
