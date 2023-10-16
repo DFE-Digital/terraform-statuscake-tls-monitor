@@ -5,10 +5,10 @@ resource "statuscake_ssl_check" "main" {
   alert_config {
     alert_at = local.statuscake_alert_at
 
-    on_reminder = local.statuscake_on_reminder
-    on_expiry   = local.statuscake_on_expiry
-    on_broken   = local.statuscake_on_broken
-    on_mixed    = local.statuscake_on_mixed
+    on_reminder = local.statuscake_notify_on_reminder
+    on_expiry   = local.statuscake_notify_on_expiry
+    on_broken   = local.statuscake_notify_on_broken
+    on_mixed    = local.statuscake_notify_on_mixed
   }
 
   monitored_resource {
