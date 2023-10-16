@@ -17,7 +17,6 @@ You will need to request an API Token from the Workspace Owner.
 
 If you work for DfE you can request an API Token using [ServiceNow](https://dfe.service-now.com/serviceportal?id=sc_cat_item&sys_id=e7a004df1b399c502fe864606e4bcb21&referrer=recent_items).
 
-
 ## Usage
 
 Example module usage:
