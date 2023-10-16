@@ -18,6 +18,12 @@ To use this module you must have a StatusCake API token.
 Example module usage:
 
 ```hcl
+variable "statuscake_api_token" {
+  description = "API token for StatusCake"
+  type        = string
+  sensitive   = true
+}
+
 module "statuscake-tls-monitor" {
   source  = "github.com/dfe-digital/terraform-statuscake-tls-monitor?ref=v0.1.0"
 
@@ -67,7 +73,6 @@ module "statuscake-tls-monitor" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_environment"></a> [environment](#input\_environment) | Environment name | `string` | n/a | yes |
 | <a name="input_statuscake_alert_at"></a> [statuscake\_alert\_at](#input\_statuscake\_alert\_at) | StatusCake alerts at the specified number of days before expiration | `list(number)` | `[]` | no |
 | <a name="input_statuscake_api_token"></a> [statuscake\_api\_token](#input\_statuscake\_api\_token) | API token for StatusCake | `string` | n/a | yes |
 | <a name="input_statuscake_check_interval"></a> [statuscake\_check\_interval](#input\_statuscake\_check\_interval) | Number of minutes between each TLS check | `number` | `43200` | no |

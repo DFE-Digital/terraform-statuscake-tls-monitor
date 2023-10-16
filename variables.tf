@@ -1,11 +1,7 @@
-variable "environment" {
-  description = "Environment name"
-  type        = string
-}
-
 variable "statuscake_api_token" {
   description = "API token for StatusCake"
   type        = string
+  sensitive   = true
 }
 
 variable "statuscake_monitored_resource_address" {
