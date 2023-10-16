@@ -7,10 +7,15 @@ Monitor your web apps TLS expiry and connect alerts to StatusCake contact groups
 
 To use this module you must have a StatusCake API token.
 
+## To create the resources in your own account
 1) Log in to StatusCake and visit your [User Profile](https://app.statuscake.com/User.php)
 2) Scroll down to 'MANAGE API KEYS' and click 'Generate new key'
 3) A new key will be generated for you. Scroll back down to 'MANAGE API KEYS' and grab your new Key
-4) Load the module using the example below
+
+## To create the resources in a different workspace
+You will need to request an API Token from the Workspace Owner.
+
+If you work for DfE you can request an API Token using [ServiceNow](https://dfe.service-now.com/serviceportal?id=sc_cat_item&sys_id=e7a004df1b399c502fe864606e4bcb21&referrer=recent_items).
 
 
 ## Usage
