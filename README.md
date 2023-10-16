@@ -29,7 +29,7 @@ variable "statuscake_api_token" {
 }
 
 module "statuscake-tls-monitor" {
-  source  = "github.com/dfe-digital/terraform-statuscake-tls-monitor?ref=v0.1.0"
+  source  = "github.com/dfe-digital/terraform-statuscake-tls-monitor?ref=v0.1.1"
 
   statuscake_api_token                     = var.statuscake_api_token # probably best not to hard code this!
   statuscake_check_interval                = 43200 # check every 12 hours
