@@ -7,10 +7,15 @@ Monitor your web apps TLS expiry and connect alerts to StatusCake contact groups
 
 To use this module you must have a StatusCake API token.
 
+## To create the resources in your own account
 1) Log in to StatusCake and visit your [User Profile](https://app.statuscake.com/User.php)
 2) Scroll down to 'MANAGE API KEYS' and click 'Generate new key'
 3) A new key will be generated for you. Scroll back down to 'MANAGE API KEYS' and grab your new Key
-4) Load the module using the example below
+
+## To create the resources in a different workspace
+You will need to request an API Token from the Workspace Owner.
+
+If you work for DfE you can request an API Token using [ServiceNow](https://dfe.service-now.com/serviceportal?id=sc_cat_item&sys_id=e7a004df1b399c502fe864606e4bcb21&referrer=recent_items).
 
 
 ## Usage
@@ -31,7 +36,7 @@ module "statuscake-tls-monitor" {
   statuscake_check_interval                = 43200 # check every 12 hours
   statuscake_monitored_resource_address    = "https://www.my-website-to-check.education.gov.uk"
   statuscake_alert_at                      = [ # days to alert on
-    60, 30, 14, 7, 3, 1
+    14, 7, 3
   ]
   statuscake_notify_on_reminder            = true
   statuscake_notify_on_expiry              = true
@@ -75,7 +80,7 @@ module "statuscake-tls-monitor" {
 |------|-------------|------|---------|:--------:|
 | <a name="input_statuscake_alert_at"></a> [statuscake\_alert\_at](#input\_statuscake\_alert\_at) | StatusCake alerts at the specified number of days before expiration | `list(number)` | `[]` | no |
 | <a name="input_statuscake_api_token"></a> [statuscake\_api\_token](#input\_statuscake\_api\_token) | API token for StatusCake | `string` | n/a | yes |
-| <a name="input_statuscake_check_interval"></a> [statuscake\_check\_interval](#input\_statuscake\_check\_interval) | Number of minutes between each TLS check | `number` | `43200` | no |
+| <a name="input_statuscake_check_interval"></a> [statuscake\_check\_interval](#input\_statuscake\_check\_interval) | Number of minutes between each TLS check | `number` | `86400` | no |
 | <a name="input_statuscake_contact_group_email_addresses"></a> [statuscake\_contact\_group\_email\_addresses](#input\_statuscake\_contact\_group\_email\_addresses) | List of email address that should receive notifications from StatusCake | `list(string)` | `[]` | no |
 | <a name="input_statuscake_contact_group_integrations"></a> [statuscake\_contact\_group\_integrations](#input\_statuscake\_contact\_group\_integrations) | List of Integration IDs to connect to your Contact Group | `list(string)` | `[]` | no |
 | <a name="input_statuscake_contact_group_name"></a> [statuscake\_contact\_group\_name](#input\_statuscake\_contact\_group\_name) | Name of the contact group in StatusCake | `string` | `""` | no |

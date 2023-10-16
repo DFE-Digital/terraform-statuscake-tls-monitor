@@ -54,7 +54,7 @@ variable "statuscake_contact_group_email_addresses" {
 variable "statuscake_check_interval" {
   description = "Number of minutes between each TLS check"
   type        = number
-  default     = 43200 # 12 hours
+  default     = 86400 # 24 hours
 }
 
 variable "statuscake_contact_group_integrations" {
