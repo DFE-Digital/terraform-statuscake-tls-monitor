@@ -1,5 +1,5 @@
 resource "statuscake_ssl_check" "main" {
-  check_interval = local.statuscake_check_interval # Interval in seconds to test. (12 hours)
+  check_interval = local.statuscake_check_interval
   contact_groups = [statuscake_contact_group.monitoring_team[0].id]
 
   alert_config {
