@@ -3,7 +3,15 @@
 [![Terraform CI](https://github.com/DFE-Digital/terraform-statuscake-tls-monitor/actions/workflows/continuous-integration-terraform.yml/badge.svg?branch=main)](https://github.com/DFE-Digital/terraform-statuscake-tls-monitor/actions/workflows/continuous-integration-terraform.yml?branch=main)
 [![GitHub release](https://github.com/DFE-Digital/terraform-statuscake-tls-monitor/releases)](https://github.com/DFE-Digital/terraform-statuscake-tls-monitor/releases)
 
-Monitor your web apps TLS expiry and connect alerts to StatusCake contact groups or integrations
+Monitor your web apps TLS expiry and connect alerts to StatusCake contact groups or integrations.
+
+To use this module you must have a StatusCake API token.
+
+1) Log in to StatusCake and visit your [User Profile](https://app.statuscake.com/User.php)
+2) Scroll down to 'MANAGE API KEYS' and click 'Generate new key'
+3) A new key will be generated for you. Scroll back down to 'MANAGE API KEYS' and grab your new Key
+4) Load the module using the example below
+
 
 ## Usage
 
@@ -13,7 +21,24 @@ Example module usage:
 module "statuscake-tls-monitor" {
   source  = "github.com/dfe-digital/terraform-statuscake-tls-monitor?ref=v0.1.0"
 
-  environment = "dev/staging/test/pre-prod/prod/post-prod"
+  statuscake_api_token                     = var.statuscake_api_token # probably best not to hard code this!
+  statuscake_check_interval                = 43200 # check every 12 hours
+  statuscake_monitored_resource_address    = "https://www.my-website-to-check.education.gov.uk"
+  statuscake_alert_at                      = [ # days to alert on
+    60, 30, 14, 7, 3, 1
+  ]
+  statuscake_notify_on_reminder            = true
+  statuscake_notify_on_expiry              = true
+  statuscake_notify_on_broken              = false
+  statuscake_notify_on_mixed               = false
+  statuscake_contact_group_name            = "My Contact Group"
+  statuscake_contact_group_email_addresses = [
+    "my-first-responder@email.com",
+    "my-second-responder@email.com",
+  ]
+  statuscake_contact_group_integrations    = [
+    "0000-1111-2222-3333456" # source this from StatusCake
+  ]
 }
 ```
 
@@ -50,10 +75,10 @@ module "statuscake-tls-monitor" {
 | <a name="input_statuscake_contact_group_integrations"></a> [statuscake\_contact\_group\_integrations](#input\_statuscake\_contact\_group\_integrations) | List of Integration IDs to connect to your Contact Group | `list(string)` | `[]` | no |
 | <a name="input_statuscake_contact_group_name"></a> [statuscake\_contact\_group\_name](#input\_statuscake\_contact\_group\_name) | Name of the contact group in StatusCake | `string` | `""` | no |
 | <a name="input_statuscake_monitored_resource_address"></a> [statuscake\_monitored\_resource\_address](#input\_statuscake\_monitored\_resource\_address) | The URL to perform TLS checks on | `string` | n/a | yes |
-| <a name="input_statuscake_on_broken"></a> [statuscake\_on\_broken](#input\_statuscake\_on\_broken) | Send StatusCake problem alerts when your certificate has issues which cause it to throw errors. | `bool` | `false` | no |
-| <a name="input_statuscake_on_expiry"></a> [statuscake\_on\_expiry](#input\_statuscake\_on\_expiry) | Send StatusCake expiration alerts when your certificate has expired. | `bool` | `true` | no |
-| <a name="input_statuscake_on_mixed"></a> [statuscake\_on\_mixed](#input\_statuscake\_on\_mixed) | Send StatusCake warnings whenever insecure content gets loaded on your HTTPS enabled website. | `bool` | `false` | no |
-| <a name="input_statuscake_on_reminder"></a> [statuscake\_on\_reminder](#input\_statuscake\_on\_reminder) | Send StatusCake reminders when your certificate is about to expire. | `bool` | `true` | no |
+| <a name="input_statuscake_notify_on_broken"></a> [statuscake\_notify\_on\_broken](#input\_statuscake\_notify\_on\_broken) | Send StatusCake problem alerts when your certificate has issues which cause it to throw errors. | `bool` | `false` | no |
+| <a name="input_statuscake_notify_on_expiry"></a> [statuscake\_notify\_on\_expiry](#input\_statuscake\_notify\_on\_expiry) | Send StatusCake expiration alerts when your certificate has expired. | `bool` | `true` | no |
+| <a name="input_statuscake_notify_on_mixed"></a> [statuscake\_notify\_on\_mixed](#input\_statuscake\_notify\_on\_mixed) | Send StatusCake warnings whenever insecure content gets loaded on your HTTPS enabled website. | `bool` | `false` | no |
+| <a name="input_statuscake_notify_on_reminder"></a> [statuscake\_notify\_on\_reminder](#input\_statuscake\_notify\_on\_reminder) | Send StatusCake reminders when your certificate is about to expire. | `bool` | `true` | no |
 
 ## Outputs
 
