@@ -1,6 +1,6 @@
 locals {
   statuscake_check_interval                = var.statuscake_check_interval
-  statuscake_monitored_resource_addresses  = var.statuscake_monitored_resource_addresses
+  statuscake_monitored_resource_addresses  = toset(var.statuscake_monitored_resource_addresses)
   statuscake_alert_at                      = var.statuscake_alert_at
   statuscake_notify_on_reminder            = var.statuscake_notify_on_reminder
   statuscake_notify_on_expiry              = var.statuscake_notify_on_expiry
