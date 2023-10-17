@@ -21,6 +21,8 @@ If you work for DfE you can request an API Token using [ServiceNow](https://dfe.
 
 Example module usage:
 
+### One service
+
 ```hcl
 variable "statuscake_api_token" {
   description = "API token for StatusCake"
@@ -31,24 +33,103 @@ variable "statuscake_api_token" {
 module "statuscake-tls-monitor" {
   source  = "github.com/dfe-digital/terraform-statuscake-tls-monitor?ref=v0.1.1"
 
+  # Required
   statuscake_api_token                     = var.statuscake_api_token # probably best not to hard code this!
-  statuscake_check_interval                = 43200 # check every 12 hours
-  statuscake_monitored_resource_address    = "https://www.my-website-to-check.education.gov.uk"
-  statuscake_alert_at                      = [ # days to alert on
-    14, 7, 3
-  ]
-  statuscake_notify_on_reminder            = true
-  statuscake_notify_on_expiry              = true
-  statuscake_notify_on_broken              = false
-  statuscake_notify_on_mixed               = false
+
+  # Recommended
+  statuscake_monitored_resource_addresses  = ["https://www.my-website-to-check.education.gov.uk"]
   statuscake_contact_group_name            = "My Contact Group"
-  statuscake_contact_group_email_addresses = [
-    "my-first-responder@email.com",
-    "my-second-responder@email.com",
-  ]
   statuscake_contact_group_integrations    = [
-    "0000-1111-2222-3333456" # source this from StatusCake
+    "000000" # source this from StatusCake
   ]
+
+  ## Optional
+  #statuscake_contact_group_email_addresses = [
+  #  "my-first-responder@email.com",
+  #  "my-second-responder@email.com",
+  #]
+  #statuscake_check_interval                = 86400 # check every 24 hours
+  #statuscake_alert_at                      = [ # days to alert on
+  #  14, 7, 3
+  #]
+  #statuscake_notify_on_reminder            = true
+  #statuscake_notify_on_expiry              = true
+  #statuscake_notify_on_broken              = false
+  #statuscake_notify_on_mixed               = false
+}
+```
+
+### Multiple services
+**variables.tf**
+```hcl
+variable "statuscake_api_token" {
+  description = "API token for StatusCake"
+  type        = string
+  sensitive   = true
+}
+
+variable "statuscake_monitors" {
+  type = map(object({
+    monitored_resource_addresses  = list(string)
+    contact_group_name            = string
+    contact_group_integrations    = optional(list(string), [])
+    contact_group_email_addresses = optional(list(string), [])
+    check_interval                = optional(number, 86400)
+    alert_at                      = optional(list(number), [30, 14, 7])
+    notify_on_reminder            = optional(bool, true)
+    notify_on_expiry              = optional(bool, true)
+    notify_on_broken              = optional(bool, false)
+    notify_on_mixed               = optional(bool, false)
+  }))
+  default = null
+}
+```
+
+**terraform.tfvars**
+```hcl
+statuscake_monitors = {
+  "my-service-1": {
+    contact_group_name         = "My unique contact group name"
+    contact_group_integrations = ["000000"]
+    monitored_resource_addresses = [
+      "https://dev.aaa-bbb-ccc.education.gov.uk/",
+      "https://test.aaa-bbb-ccc.education.gov.uk/",
+      "https://www.aaa-bbb-ccc.education.gov.uk/",
+    ]
+    contact_group_email_addresses = [
+      "example1@email.com",
+      "example2@email.com",
+      "example3@email.com",
+    ]
+  }
+  "my-service-2": {
+    contact_group_name         = "My 2nd contact group name"
+    contact_group_integrations = ["000000"]
+    monitored_resource_addresses = [
+      "https://bastion.111-222-333.education.gov.uk/",
+    ]
+  }
+}
+```
+
+**statuscake.tf**
+```hcl
+module "statuscake-tls-monitor" {
+  source  = "github.com/dfe-digital/terraform-statuscake-tls-monitor?ref=v0.1.1"
+
+  for_each = var.statuscake_monitors
+
+  statuscake_api_token                     = var.statuscake_api_token # probably best not to hard code this!
+  statuscake_check_interval                = each.value.check_interval
+  statuscake_monitored_resource_addresses  = each.value.monitored_resource_addresses
+  statuscake_alert_at                      = each.value.alert_at
+  statuscake_notify_on_reminder            = each.value.notify_on_reminder
+  statuscake_notify_on_expiry              = each.value.notify_on_expiry
+  statuscake_notify_on_broken              = each.value.notify_on_broken
+  statuscake_notify_on_mixed               = each.value.notify_on_mixed
+  statuscake_contact_group_name            = each.value.contact_group_name
+  statuscake_contact_group_email_addresses = each.value.contact_group_email_addresses
+  statuscake_contact_group_integrations    = each.value.contact_group_integrations
 }
 ```
 
@@ -83,7 +164,7 @@ module "statuscake-tls-monitor" {
 | <a name="input_statuscake_contact_group_email_addresses"></a> [statuscake\_contact\_group\_email\_addresses](#input\_statuscake\_contact\_group\_email\_addresses) | List of email address that should receive notifications from StatusCake | `list(string)` | `[]` | no |
 | <a name="input_statuscake_contact_group_integrations"></a> [statuscake\_contact\_group\_integrations](#input\_statuscake\_contact\_group\_integrations) | List of Integration IDs to connect to your Contact Group | `list(string)` | `[]` | no |
 | <a name="input_statuscake_contact_group_name"></a> [statuscake\_contact\_group\_name](#input\_statuscake\_contact\_group\_name) | Name of the contact group in StatusCake | `string` | `""` | no |
-| <a name="input_statuscake_monitored_resource_address"></a> [statuscake\_monitored\_resource\_address](#input\_statuscake\_monitored\_resource\_address) | The URL to perform TLS checks on | `string` | n/a | yes |
+| <a name="input_statuscake_monitored_resource_addresses"></a> [statuscake\_monitored\_resource\_addresses](#input\_statuscake\_monitored\_resource\_addresses) | The URLs to perform TLS checks on | `list(string)` | `[]` | no |
 | <a name="input_statuscake_notify_on_broken"></a> [statuscake\_notify\_on\_broken](#input\_statuscake\_notify\_on\_broken) | Send StatusCake problem alerts when your certificate has issues which cause it to throw errors. | `bool` | `false` | no |
 | <a name="input_statuscake_notify_on_expiry"></a> [statuscake\_notify\_on\_expiry](#input\_statuscake\_notify\_on\_expiry) | Send StatusCake expiration alerts when your certificate has expired. | `bool` | `true` | no |
 | <a name="input_statuscake_notify_on_mixed"></a> [statuscake\_notify\_on\_mixed](#input\_statuscake\_notify\_on\_mixed) | Send StatusCake warnings whenever insecure content gets loaded on your HTTPS enabled website. | `bool` | `false` | no |

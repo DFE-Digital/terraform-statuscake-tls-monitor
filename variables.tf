@@ -4,9 +4,10 @@ variable "statuscake_api_token" {
   sensitive   = true
 }
 
-variable "statuscake_monitored_resource_address" {
-  description = "The URL to perform TLS checks on"
-  type        = string
+variable "statuscake_monitored_resource_addresses" {
+  description = "The URLs to perform TLS checks on"
+  type        = list(string)
+  default     = []
 }
 
 variable "statuscake_alert_at" {
