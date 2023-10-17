@@ -1,5 +1,4 @@
 locals {
-  statuscake_api_token                     = var.statuscake_api_token
   statuscake_check_interval                = var.statuscake_check_interval
   statuscake_monitored_resource_addresses  = var.statuscake_monitored_resource_addresses
   statuscake_alert_at                      = var.statuscake_alert_at

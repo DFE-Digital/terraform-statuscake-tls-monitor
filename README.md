@@ -24,6 +24,10 @@ Example module usage:
 ### One service
 
 ```hcl
+provider "statuscake" {
+  api_token = var.statuscake_api_token
+}
+
 variable "statuscake_api_token" {
   description = "API token for StatusCake"
   type        = string
@@ -32,9 +36,6 @@ variable "statuscake_api_token" {
 
 module "statuscake-tls-monitor" {
   source  = "github.com/dfe-digital/terraform-statuscake-tls-monitor?ref=v0.1.2"
-
-  # Required
-  statuscake_api_token                     = var.statuscake_api_token # probably best not to hard code this!
 
   # Recommended
   statuscake_monitored_resource_addresses  = ["https://www.my-website-to-check.education.gov.uk"]
@@ -62,6 +63,10 @@ module "statuscake-tls-monitor" {
 ### Multiple services
 **variables.tf**
 ```hcl
+provider "statuscake" {
+  api_token = var.statuscake_api_token
+}
+
 variable "statuscake_api_token" {
   description = "API token for StatusCake"
   type        = string
@@ -119,7 +124,6 @@ module "statuscake-tls-monitor" {
 
   for_each = var.statuscake_monitors
 
-  statuscake_api_token                     = var.statuscake_api_token # probably best not to hard code this!
   statuscake_check_interval                = each.value.check_interval
   statuscake_monitored_resource_addresses  = each.value.monitored_resource_addresses
   statuscake_alert_at                      = each.value.alert_at
@@ -159,7 +163,6 @@ module "statuscake-tls-monitor" {
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_statuscake_alert_at"></a> [statuscake\_alert\_at](#input\_statuscake\_alert\_at) | StatusCake alerts at the specified number of days before expiration | `list(number)` | `[]` | no |
-| <a name="input_statuscake_api_token"></a> [statuscake\_api\_token](#input\_statuscake\_api\_token) | API token for StatusCake | `string` | n/a | yes |
 | <a name="input_statuscake_check_interval"></a> [statuscake\_check\_interval](#input\_statuscake\_check\_interval) | Number of minutes between each TLS check | `number` | `86400` | no |
 | <a name="input_statuscake_contact_group_email_addresses"></a> [statuscake\_contact\_group\_email\_addresses](#input\_statuscake\_contact\_group\_email\_addresses) | List of email address that should receive notifications from StatusCake | `list(string)` | `[]` | no |
 | <a name="input_statuscake_contact_group_integrations"></a> [statuscake\_contact\_group\_integrations](#input\_statuscake\_contact\_group\_integrations) | List of Integration IDs to connect to your Contact Group | `list(string)` | `[]` | no |

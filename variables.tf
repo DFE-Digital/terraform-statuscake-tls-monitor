@@ -1,9 +1,3 @@
-variable "statuscake_api_token" {
-  description = "API token for StatusCake"
-  type        = string
-  sensitive   = true
-}
-
 variable "statuscake_monitored_resource_addresses" {
   description = "The URLs to perform TLS checks on"
   type        = list(string)
