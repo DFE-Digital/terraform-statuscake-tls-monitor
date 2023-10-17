@@ -31,7 +31,7 @@ variable "statuscake_api_token" {
 }
 
 module "statuscake-tls-monitor" {
-  source  = "github.com/dfe-digital/terraform-statuscake-tls-monitor?ref=v0.1.1"
+  source  = "github.com/dfe-digital/terraform-statuscake-tls-monitor?ref=v0.1.2"
 
   # Required
   statuscake_api_token                     = var.statuscake_api_token # probably best not to hard code this!
@@ -115,7 +115,7 @@ statuscake_monitors = {
 **statuscake.tf**
 ```hcl
 module "statuscake-tls-monitor" {
-  source  = "github.com/dfe-digital/terraform-statuscake-tls-monitor?ref=v0.1.1"
+  source  = "github.com/dfe-digital/terraform-statuscake-tls-monitor?ref=v0.1.2"
 
   for_each = var.statuscake_monitors
 
