@@ -1,4 +1,6 @@
 resource "statuscake_ssl_check" "main" {
+  for_each = local.statuscake_monitored_resource_addresses
+
   check_interval = local.statuscake_check_interval
   contact_groups = [statuscake_contact_group.monitoring_team[0].id]
 
@@ -12,7 +14,7 @@ resource "statuscake_ssl_check" "main" {
   }
 
   monitored_resource {
-    address = local.statuscake_monitored_resource_address
+    address = each.value
   }
 }
 

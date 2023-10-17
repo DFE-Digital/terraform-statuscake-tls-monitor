@@ -1,8 +1,8 @@
 statuscake_api_token                     = "000-11-222-3333-44-555"
 statuscake_check_interval                = 86400 # check every 24 hours
-statuscake_monitored_resource_address    = "https://www.my-website-to-check.education.gov.uk"
+statuscake_monitored_resource_addresses  = ["https://www.my-website-to-check.education.gov.uk"]
 statuscake_alert_at                      = [ # days to alert on
-  60, 30, 14
+  30, 14, 7
 ]
 statuscake_notify_on_reminder            = true
 statuscake_notify_on_expiry              = true
