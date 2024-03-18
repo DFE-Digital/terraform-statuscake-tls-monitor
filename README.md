@@ -35,7 +35,7 @@ variable "statuscake_api_token" {
 }
 
 module "statuscake-tls-monitor" {
-  source  = "github.com/dfe-digital/terraform-statuscake-tls-monitor?ref=v0.1.2"
+  source  = "github.com/dfe-digital/terraform-statuscake-tls-monitor?ref=v0.1.3"
 
   # Recommended
   statuscake_monitored_resource_addresses  = ["https://www.my-website-to-check.education.gov.uk"]
