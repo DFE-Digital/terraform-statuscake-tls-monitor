@@ -149,7 +149,7 @@ module "statuscake-tls-monitor" {
 
 | Name | Version |
 |------|---------|
-| <a name="provider_statuscake"></a> [statuscake](#provider\_statuscake) | 2.2.1 |
+| <a name="provider_statuscake"></a> [statuscake](#provider\_statuscake) | 2.2.2 |
 
 ## Resources
 
