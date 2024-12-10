@@ -142,14 +142,14 @@ module "statuscake-tls-monitor" {
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.6.1 |
-| <a name="requirement_statuscake"></a> [statuscake](#requirement\_statuscake) | >= 2.1.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.9 |
+| <a name="requirement_statuscake"></a> [statuscake](#requirement\_statuscake) | ~> 2.1 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_statuscake"></a> [statuscake](#provider\_statuscake) | 2.2.2 |
+| <a name="provider_statuscake"></a> [statuscake](#provider\_statuscake) | ~> 2.1 |
 
 ## Resources
 
