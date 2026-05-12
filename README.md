@@ -141,27 +141,27 @@ module "statuscake-tls-monitor" {
 ## Requirements
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.9 |
 | <a name="requirement_statuscake"></a> [statuscake](#requirement\_statuscake) | ~> 2.1 |
 
 ## Providers
 
 | Name | Version |
-|------|---------|
-| <a name="provider_statuscake"></a> [statuscake](#provider\_statuscake) | ~> 2.1 |
+| ---- | ------- |
+| <a name="provider_statuscake"></a> [statuscake](#provider\_statuscake) | 2.2.2 |
 
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [statuscake_contact_group.monitoring_team](https://registry.terraform.io/providers/StatusCakeDev/statuscake/latest/docs/resources/contact_group) | resource |
 | [statuscake_ssl_check.main](https://registry.terraform.io/providers/StatusCakeDev/statuscake/latest/docs/resources/ssl_check) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_statuscake_alert_at"></a> [statuscake\_alert\_at](#input\_statuscake\_alert\_at) | StatusCake alerts at the specified number of days before expiration | `list(number)` | `[]` | no |
 | <a name="input_statuscake_check_interval"></a> [statuscake\_check\_interval](#input\_statuscake\_check\_interval) | Number of minutes between each TLS check | `number` | `86400` | no |
 | <a name="input_statuscake_contact_group_email_addresses"></a> [statuscake\_contact\_group\_email\_addresses](#input\_statuscake\_contact\_group\_email\_addresses) | List of email address that should receive notifications from StatusCake | `list(string)` | `[]` | no |
@@ -176,7 +176,7 @@ module "statuscake-tls-monitor" {
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_statuscake_contact_group"></a> [statuscake\_contact\_group](#output\_statuscake\_contact\_group) | n/a |
 | <a name="output_statuscake_ssl_check"></a> [statuscake\_ssl\_check](#output\_statuscake\_ssl\_check) | n/a |
 <!-- END_TF_DOCS -->
